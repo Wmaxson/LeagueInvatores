@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,16 +9,20 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener{
-		GameObject gO;
+	Font titleFont;
+	Font subtitleFont;
 		Timer timer;
 		final int MENU_STATE = 0;
 		final int GAME_STATE = 1;
 		final int END_STATE = 2;
 		int currentState = MENU_STATE;
-		public GamePanel() {
 		
+		public GamePanel() {
+		titleFont = new Font("Arial", Font.PLAIN, 48);
+		subtitleFont = new Font("Arial", Font.PLAIN, 24
+				);
 		timer = new Timer(1000/60, this);
-		gO = new GameObject();
+		
 	}
 	
 	public void startGame() { 
@@ -28,7 +33,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		repaint();
 		 if(currentState == MENU_STATE){
-
+			 
              updateMenuState();
 
      }else if(currentState == GAME_STATE){
@@ -48,8 +53,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 
 	 public void paintComponent(Graphics g){
 
-		  gO.draw(g);
-		  gO.update();
+		 
 		  
 		  if(currentState == MENU_STATE){
 
@@ -70,20 +74,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("hi");
+		
 		
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("hi");
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			currentState++;
+			if(currentState > END_STATE){
+                currentState = MENU_STATE;
+        }
+		}
+		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("hi");
+		
 	}
 
 	public void updateMenuState() { 
@@ -98,20 +108,31 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 
 	
 	}
+	
+	
 	public void drawMenuState(Graphics g) { 
-
+		
 		g.setColor(Color.BLUE);
+		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);    
+		g.setFont(titleFont);
+		g.setColor(Color.YELLOW);
+		g.drawString("LEAGUE INVADERS", 30, 200);
+		g.setFont(subtitleFont);
+		g.drawString("Press ENTER to start", 150, 500);
 
-		g.fillRect(0, 0, gO.WIDTH, gO.HEIGHT);    
+		
 		
 	}
 	public void drawGameState(Graphics g) { 
+		g.setColor(Color.BLACK);
 
-		
+		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);  
 	}
 	public void drawEndState(Graphics g) { 
 
-	
+		g.setColor(Color.RED);
+
+		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);  
 	}
 
 	}
