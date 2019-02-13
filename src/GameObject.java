@@ -6,16 +6,19 @@ public class GameObject {
     int width;
     int height;
     
-    public void update()	{
+    public GameObject(int x2, int y2, int width2, int height2) {
+		x = x2;
+		y = y2;
+		width = width2;
+		height = height2;
+	}
 
-    	x++;
-    		 
+	public void update()	{
+	 
     }
     
     public void draw(Graphics g) 	{
 
-    	g.fillRect(x, y, 100, 100);
-    	
     	
     }
 }

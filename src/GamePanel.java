@@ -11,6 +11,9 @@ import javax.swing.*;
 public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	Font titleFont;
 	Font subtitleFont;
+	Boolean isAlive = true;
+	Rocketship ship = new Rocketship(250, 700, 50, 50);
+	ObjectManager man = new ObjectManager(ship);
 		Timer timer;
 		final int MENU_STATE = 0;
 		final int GAME_STATE = 1;
@@ -62,7 +65,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	     }else if(currentState == GAME_STATE){
 
 	             drawGameState(g);
-
 	     }else if(currentState == END_STATE){
 
 	            drawEndState(g);
@@ -85,7 +87,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 			currentState++;
 			if(currentState > END_STATE){
                 currentState = MENU_STATE;
-        }
+			}
+		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_UP) {
+			ship.up = true;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+			ship.down = true;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			ship.left = true;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			ship.right = true;
 		}
 		
 	}
@@ -93,7 +108,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getKeyCode() == KeyEvent.VK_UP) {
+			ship.up = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+			ship.down = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			ship.left = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			ship.right = false;
+		}
 	}
 
 	public void updateMenuState() { 
@@ -102,6 +128,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	}
 	public void updateGameState() { 
 
+		ship.update();
 		
 	}
 	public void updateEndState() { 
@@ -127,12 +154,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		g.setColor(Color.BLACK);
 
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);  
+		
+		ship.draw(g);
 	}
 	public void drawEndState(Graphics g) { 
 
 		g.setColor(Color.RED);
 
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);  
+		
+		g.setFont(titleFont);
+		g.setColor(Color.BLACK);
+		g.drawString("Game over :(", 30, 200);
 	}
 
 	}
