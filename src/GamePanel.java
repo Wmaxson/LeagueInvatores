@@ -13,7 +13,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	Font subtitleFont;
 	Boolean isAlive = true;
 	Rocketship ship = new Rocketship(250, 700, 50, 50);
-	ObjectManager man = new ObjectManager(ship);
+	ObjectManager man;
+	
 		Timer timer;
 		final int MENU_STATE = 0;
 		final int GAME_STATE = 1;
@@ -22,8 +23,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		
 		public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
-		subtitleFont = new Font("Arial", Font.PLAIN, 24
-				);
+		subtitleFont = new Font("Arial", Font.PLAIN, 24);
+		man = new ObjectManager(ship);
 		timer = new Timer(1000/60, this);
 		
 	}
@@ -88,7 +89,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 			if(currentState > END_STATE){
                 currentState = MENU_STATE;
 			}
+			
 		}
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			man.addProjectile(new Projectiles(ship.x+20, ship.y, 10, 10));
+		}
+		
 		
 		if(e.getKeyCode() == KeyEvent.VK_UP) {
 			ship.up = true;
@@ -102,6 +108,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			ship.right = true;
 		}
+		
 		
 	}
 
@@ -120,6 +127,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			ship.right = false;
 		}
+		
 	}
 
 	public void updateMenuState() { 
@@ -128,7 +136,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	}
 	public void updateGameState() { 
 
-		ship.update();
+		man.update();
 		
 	}
 	public void updateEndState() { 
@@ -155,7 +163,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);  
 		
-		ship.draw(g);
+		man.draw(g);
 	}
 	public void drawEndState(Graphics g) { 
 
