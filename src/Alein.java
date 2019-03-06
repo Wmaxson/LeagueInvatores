@@ -12,6 +12,7 @@ public class Alein extends GameObject {
 		g.fillRect(x, y, width, height);
 	}
 	public void update()	{
+		super.update();
 		y++;
 	}
 
